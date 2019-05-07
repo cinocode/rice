@@ -1,1 +1,12 @@
 Work In Progress - Linux Rice
+
+# on arch iso load dvorak ger io keyboard layout
+pacan -Sy git
+git clone https://github.com/cinocode/rice.git
+loadkeys rice/dvorak_ger_io.kmap
+
+# after pacstrap'ing /mnt you can move the git repo over
+mv rice /mnt
+
+# after arch-chroot - load and persist the keyboard layout
+sh rice/install_dvorak_ger_io.sh
