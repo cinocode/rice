@@ -8,7 +8,7 @@ read -p "Username: " username
 home_dir="/home/$username"
 read -p "Set up a user? (y/n): " opt_user
 read -p "Set up yay (y/n): " opt_yay
-read -p "Install i3 gaps and a bunch of other stuff? (y/n): " opt_install
+read -p "Install sway and a bunch of other stuff? (y/n): " opt_install
 read -p "Set up dotfiles? (y/n): " opt_dot
 read -p "Install Intel microcode? (y/n)" opt_intel
 read -p "Install Amd microcode? (y/n)" opt_amd
@@ -25,12 +25,9 @@ then
   echo "Defaults passwd_timeout=60" >> /etc/sudoers
 
   echo 'if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then' >> "$home_dir/.bash_profile"
-  echo '  startx' >> "$home_dir/.bash_profile"
+  echo '  sway' >> "$home_dir/.bash_profile"
   echo 'fi' >> "$home_dir/.bash_profile"
   chown ole:ole $home_dir/.bash_profile
-
-  echo 'exec i3' >> $home_dir/.xinitrc
-  chown ole:ole $home_dir/.xinitrc
 
   mkdir -p /etc/systemd/system/getty@tty1.service.d/
   echo [Service] > /etc/systemd/system/getty@tty1.service.d/override.conf
@@ -59,7 +56,9 @@ if [ "$opt_install" = "y" ]
 then
   pacman -Syy
 
-  pacman -Su i3 xorg-server xorg-xinit ttf-inconsolata ttf-liberation ttf-font-awesome tmux gvim keychain openssh rofi feh compton acpi sysstat alsa-utils ntfs-3g pavucontrol pulseaudio pulseaudio-bluetooth networkmanager networkmanager-openconnect network-manager-applet vlc thunar ranger gtk-chtheme arc-gtk-theme viewnior tumbler ffmpegthumbnailer gvfs gvfs-smb xarchiver redshift arandr autorandr
+  pacman -Su
+
+  pacman -S sway swaylock ttf-inconsolata ttf-liberation ttf-font-awesome tmux gvim keychain openssh rofi feh compton acpi sysstat alsa-utils ntfs-3g pavucontrol pulseaudio pulseaudio-bluetooth networkmanager networkmanager-openconnect network-manager-applet vlc thunar ranger gtk-chtheme arc-gtk-theme viewnior tumbler ffmpegthumbnailer gvfs gvfs-smb xarchiver redshift arandr autorandr
 
   cd /
   git clone https://github.com/cinocode/st.git
@@ -81,6 +80,9 @@ then
   sudo -u "$username" sh "$home_dir/.dotfiles/init_configs.sh"
   sudo -u "$username" sh "$home_dir/.dotfiles/init_wallpaper.sh"
   sudo -u "$username" sh "$home_dir/.dotfiles/init_vim.sh"
+
+  mkdir -p "$home_dir/.config/sway"
+  cp "$home_dir/.config/i3/config" "$home_dir/.config/sway/"
 fi
 
 
