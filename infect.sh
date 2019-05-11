@@ -63,6 +63,10 @@ then
   rm -rf /st
 
   sudo -u "$username" yay -Sy google-chrome enpass-bin system-san-francisco-font-git ttf-vlgothic screengrab pasystray pulseaudio-ctl
+
+  echo "#!/bin/bash" > /usr/local/bin/google-chrome-stable-incognito
+  echo "google-chrome-stable --incognito" >> /usr/local/bin/google-chrome-stable-incognito
+  chmod +x /usr/local/bin/google-chrome-stable-incognito
 fi
 
 if [ "$opt_dot" = "y" ]
