@@ -36,6 +36,10 @@ then
   echo [Service] > /etc/systemd/system/getty@tty1.service.d/override.conf
   echo ExecStart= >> /etc/systemd/system/getty@tty1.service.d/override.conf
   echo ExecStart=-/usr/bin/agetty --autologin $username --noclear %I $TERM >> /etc/systemd/system/getty@tty1.service.d/override.conf
+
+  sudo -u "$username" mkdir "$home_dir/code"
+  sudo -u "$username" git clone https://github.com/cinocode/dvorak_ger_io "$home_dir/code/dvorak_ger_io"
+  sudo -u "$username" "$home_dir/code/dvorak_ger_io/xmodmap/Xmodmap" "$home_dir/.Xmodmap"
 fi
 
 if [ "$opt_yay" = "y" ]
