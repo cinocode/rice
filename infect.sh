@@ -10,6 +10,8 @@ read -p "Set up a user? (y/n): " opt_user
 read -p "Set up yay (y/n): " opt_yay
 read -p "Install i3 gaps and a bunch of other stuff? (y/n): " opt_install
 read -p "Set up dotfiles? (y/n): " opt_dot
+read -p "Install Intel microcode? (y/n)" opt_intel
+read -p "Install Amd microcode? (y/n)" opt_amd
 
 if [ "$opt_user" = "y" ]
 then
@@ -77,5 +79,18 @@ then
   sudo -u "$username" sh "$home_dir/.dotfiles/init_vim.sh"
 fi
 
+
+if [ "$opt_intel" = "y" ]
+then
+  pacman -S intel_ucode
+  grub-mkconfig -o /boot/grub/grub.cfg
+fi
+
+if [ "$opt_amd" = "y" ]
+then
+  pacman -S amd_ucode
+  grub-mkconfig -o /boot/grub/grub.cfg
+fi
+
 echo If everything looks clean, you probably want to rm -rf /rice
-echo Also this is a good time to take care of drivers and microcode
+echo Also this is a good time to take care of drivers
