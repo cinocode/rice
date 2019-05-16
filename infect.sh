@@ -56,7 +56,7 @@ then
 
   pacman -Su
 
-  pacman -S sway swaylock ttf-inconsolata ttf-liberation ttf-font-awesome tmux gvim keychain openssh rofi w3m feh compton acpi sysstat alsa-utils ntfs-3g pavucontrol pulseaudio pulseaudio-bluetooth networkmanager networkmanager-openconnect network-manager-applet vlc thunar ranger gtk-chtheme arc-gtk-theme viewnior tumbler ffmpegthumbnailer gvfs gvfs-smb xarchiver redshift arandr autorandr
+  pacman -S sway swaylock waybar ttf-inconsolata ttf-liberation tmux gvim keychain openssh rofi w3m feh compton acpi sysstat alsa-utils ntfs-3g pavucontrol pulseaudio pulseaudio-bluetooth networkmanager networkmanager-openconnect vlc thunar ranger gtk-chtheme arc-gtk-theme viewnior tumbler ffmpegthumbnailer gvfs gvfs-smb xarchiver redshift
 
   cd /
   git clone https://github.com/cinocode/st.git
@@ -65,7 +65,7 @@ then
   cd /
   rm -rf /st
 
-  sudo -u "$username" yay -Sy swaylock-blur-bin google-chrome enpass-bin system-san-francisco-font-git ttf-vlgothic screengrab pasystray pulseaudio-ctl
+  sudo -u "$username" yay -Sy swaylock-blur-bin google-chrome enpass-bin network-manager-applet-indicator otf-font-awesome system-san-francisco-font-git ttf-vlgothic screengrab pasystray pulseaudio-ctl
 
   echo "#!/bin/bash" > /usr/local/bin/google-chrome-stable-incognito
   echo "google-chrome-stable --incognito" >> /usr/local/bin/google-chrome-stable-incognito
@@ -95,6 +95,9 @@ then
   pacman -S amd_ucode
   grub-mkconfig -o /boot/grub/grub.cfg
 fi
+
+systemctl start NetworkManager
+systemctl enable NetworkManager
 
 echo If everything looks clean, you probably want to rm -rf /rice
 echo Also this is a good time to take care of drivers
