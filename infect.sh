@@ -67,7 +67,7 @@ then
   cd /
   rm -rf /st
 
-  sudo -u "$username" yay -Sy google-chrome enpass-bin system-san-francisco-font-git ttf-vlgothic screengrab pasystray pulseaudio-ctl
+  sudo -u "$username" yay -Sy swaylock-blur-bin google-chrome enpass-bin system-san-francisco-font-git ttf-vlgothic screengrab pasystray pulseaudio-ctl
 
   echo "#!/bin/bash" > /usr/local/bin/google-chrome-stable-incognito
   echo "google-chrome-stable --incognito" >> /usr/local/bin/google-chrome-stable-incognito
