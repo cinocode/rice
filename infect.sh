@@ -58,7 +58,7 @@ then
 
   pacman -Su
 
-  pacman -S sway swaylock ttf-inconsolata ttf-liberation ttf-font-awesome tmux gvim keychain openssh rofi feh compton acpi sysstat alsa-utils ntfs-3g pavucontrol pulseaudio pulseaudio-bluetooth networkmanager networkmanager-openconnect network-manager-applet vlc thunar ranger gtk-chtheme arc-gtk-theme viewnior tumbler ffmpegthumbnailer gvfs gvfs-smb xarchiver redshift arandr autorandr
+  pacman -S sway swaylock ttf-inconsolata ttf-liberation ttf-font-awesome tmux gvim keychain openssh rofi w3m feh compton acpi sysstat alsa-utils ntfs-3g pavucontrol pulseaudio pulseaudio-bluetooth networkmanager networkmanager-openconnect network-manager-applet vlc thunar ranger gtk-chtheme arc-gtk-theme viewnior tumbler ffmpegthumbnailer gvfs gvfs-smb xarchiver redshift arandr autorandr
 
   cd /
   git clone https://github.com/cinocode/st.git
