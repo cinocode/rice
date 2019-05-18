@@ -24,11 +24,6 @@ then
   echo "Defaults !tty_tickets" >> /etc/sudoers
   echo "Defaults env_reset, timestamp_timeout=30" >> /etc/sudoers
 
-  echo 'if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then' >> "$home_dir/.bash_profile"
-  echo '  sway' >> "$home_dir/.bash_profile"
-  echo 'fi' >> "$home_dir/.bash_profile"
-  chown ole:ole $home_dir/.bash_profile
-
   mkdir -p /etc/systemd/system/getty@tty1.service.d/
   echo [Service] > /etc/systemd/system/getty@tty1.service.d/override.conf
   echo ExecStart= >> /etc/systemd/system/getty@tty1.service.d/override.conf
@@ -36,7 +31,10 @@ then
 
   sudo -u "$username" mkdir "$home_dir/code"
   sudo -u "$username" git clone https://github.com/cinocode/dvorak_ger_io "$home_dir/code/dvorak_ger_io"
-  sudo -u "$username" "$home_dir/code/dvorak_ger_io/xmodmap/Xmodmap" "$home_dir/.Xmodmap"
+  cd "$home_dir/code/dvorak_ger_io"
+  sudo -u "$username" git checkout gk64
+  sh "$home_dir/code/dvorak_ger_io/install_xkb.sh"
+  cd /
 fi
 
 if [ "$opt_yay" = "y" ]
