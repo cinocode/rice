@@ -17,12 +17,12 @@ if [ "$opt_user" = "y" ]
 then
   echo "Setting up $username - please provide your password"
   useradd -m "$username"
-  usermod -aG wheel "$username"
+  usermod -g users -aG wheel "$username"
   passwd "$username"
 
   echo "%wheel      ALL=(ALL) ALL" >> /etc/sudoers
   echo "Defaults !tty_tickets" >> /etc/sudoers
-  echo "Defaults passwd_timeout=60" >> /etc/sudoers
+  echo "Defaults env_reset, timestamp_timeout=30" >> /etc/sudoers
 
   echo 'if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then' >> "$home_dir/.bash_profile"
   echo '  sway' >> "$home_dir/.bash_profile"
