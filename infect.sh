@@ -54,18 +54,11 @@ if [ "$opt_install" = "y" ]
 then
   pacman -Syy
 
-  pacman -Su
+  pacman -Su sway waybar ttf-inconsolata ttf-liberation ttf-dejavu terminus-fonts zsh tmux gvim keychain openssh rofi w3m feh acpi sysstat alsa-utils ntfs-3g pavucontrol pulseaudio pulseaudio-bluetooth networkmanager networkmanager-openconnect vlc thunar ranger gtk-chtheme arc-gtk-theme viewnior tumbler ffmpegthumbnailer gvfs gvfs-smb xarchiver redshift
 
-  pacman -S sway swaylock waybar ttf-inconsolata ttf-liberation tmux gvim keychain openssh rofi w3m feh compton acpi sysstat alsa-utils ntfs-3g pavucontrol pulseaudio pulseaudio-bluetooth networkmanager networkmanager-openconnect vlc thunar ranger gtk-chtheme arc-gtk-theme viewnior tumbler ffmpegthumbnailer gvfs gvfs-smb xarchiver redshift
+  chsh -s /bin/zsh "$username"
 
-  cd /
-  git clone https://github.com/cinocode/st.git
-  cd /st
-  make install
-  cd /
-  rm -rf /st
-
-  sudo -u "$username" yay -Sy swaylock-blur-bin google-chrome enpass-bin network-manager-applet-indicator otf-font-awesome system-san-francisco-font-git ttf-vlgothic screengrab pasystray pulseaudio-ctl
+  sudo -u "$username" yay -Sy swaylock-blur-bin google-chrome enpass-bin network-manager-applet-indicator rxvt-unicode-pixbuf otf-font-awesome system-san-francisco-font-git ttf-vlgothic screengrab pasystray pulseaudio-ctl
 
   echo "#!/bin/bash" > /usr/local/bin/google-chrome-stable-incognito
   echo "google-chrome-stable --incognito" >> /usr/local/bin/google-chrome-stable-incognito
