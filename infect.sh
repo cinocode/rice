@@ -54,7 +54,7 @@ if [ "$opt_install" = "y" ]
 then
   pacman -Syy
 
-  pacman -Su sway waybar ttf-inconsolata ttf-liberation ttf-dejavu terminus-fonts zsh tmux gvim keychain openssh rofi w3m feh acpi sysstat alsa-utils ntfs-3g pavucontrol pulseaudio pulseaudio-bluetooth networkmanager networkmanager-openconnect vlc thunar ranger gtk-chtheme arc-gtk-theme viewnior tumbler ffmpegthumbnailer gvfs gvfs-smb xarchiver redshift
+  pacman -Su sway waybar ttf-inconsolata ttf-liberation ttf-dejavu terminus-fonts zsh tmux gvim keychain openssh rofi w3m feh acpi sysstat alsa-utils ntfs-3g pavucontrol pulseaudio pulseaudio-bluetooth networkmanager networkmanager-openconnect vlc thunar ranger gtk-chtheme arc-gtk-theme viewnior tumbler ffmpegthumbnailer gvfs gvfs-smb xarchiver redshift xdg-user-dirs
 
   chsh -s /bin/zsh "$username"
 
@@ -63,6 +63,14 @@ then
   echo "#!/bin/bash" > /usr/local/bin/google-chrome-stable-incognito
   echo "google-chrome-stable --incognito" >> /usr/local/bin/google-chrome-stable-incognito
   chmod +x /usr/local/bin/google-chrome-stable-incognito
+
+  echo DESKTOP=$home_dir > /etc/xdg/user-dirs.defaults
+  echo DOWNLOAD=down > /etc/xdg/user-dirs.defaults
+  echo DOCUMENTS=doc >> /etc/xdg/user-dirs.defaults
+  echo MUSIC=music >> /etc/xdg/user-dirs.defaults
+  echo PICTURES=pic >> /etc/xdg/user-dirs.defaults
+  echo VIDEOS=vid >> /etc/xdg/user-dirs.defaults
+  sudo -u "$username" xdg-user-dirs-update
 fi
 
 if [ "$opt_dot" = "y" ]
