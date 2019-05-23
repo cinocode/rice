@@ -60,7 +60,7 @@ then
 
   chsh -s /bin/zsh "$username"
 
-  sudo -u "$username" yay -Sy swaylock-blur-bin google-chrome enpass-bin network-manager-applet-indicator rxvt-unicode-pixbuf otf-font-awesome system-san-francisco-font-git ttf-vlgothic screengrab pasystray pulseaudio-ctl
+  sudo -u "$username" yay -Sy swaylock-blur-bin google-chrome enpass-bin network-manager-applet-indicator rxvt-unicode-pixbuf otf-font-awesome system-san-francisco-font-git ttf-vlgothic screengrab pasystray pulseaudio-ctl gotop
 
   echo "#!/bin/bash" > /usr/local/bin/google-chrome-stable-incognito
   echo "google-chrome-stable --incognito" >> /usr/local/bin/google-chrome-stable-incognito
