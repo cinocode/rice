@@ -1,8 +1,9 @@
 #!/bin/bash
-timedatectl set-ntp true
-ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 systemctl start dhcpcd
 systemctl enable dhcpcd
+ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+sleep 2
+timedatectl set-ntp true
 
 read -p "Username: " username
 home_dir="/home/$username"
@@ -51,13 +52,23 @@ then
   pacman-key -r F75D9D76
   pacman-key --lsign-key F75D9D76
 
-  pacman -Syy
+  pacman -Syyu
 
-  pacman -Su sway waybar xorg-server-xwayland ttf-inconsolata ttf-liberation ttf-dejavu terminus-fonts zsh tmux gvim keychain openssh rofi w3m feh acpi sysstat alsa-utils ntfs-3g pavucontrol pulseaudio pulseaudio-bluetooth networkmanager networkmanager-openconnect vlc thunar ranger arc-gtk-theme viewnior tumbler ffmpegthumbnailer gvfs gvfs-smb xarchiver redshift xdg-user-dirs git maven nodejs jdk8-openjdk iw dialog wpa_supplicant
+  yay -S sway swaylock-blur-bin waybar xorg-server-xwayland 
+  yay -S ttf-inconsolata ttf-liberation ttf-dejavu otf-font-awesome system-san-francisco-font-git ttf-vlgothic
+  yay -S zsh tmux gvim keychain openssh xdg-user-dirs
+  yay -S rofi w3m feh thunar ranger
+  yay -S acpi sysstat alsa-utils ntfs-3g gotop
+  yay -S pavucontrol pulseaudio pulseaudio-bluetooth pasystray pulseaudio-ctl
+  yay -S networkmanager networkmanager-openconnect network-manager-applet-indicator
+  yay -S vlc arc-gtk-theme viewnior tumbler ffmpegthumbnailer
+  yay -S gvfs gvfs-smb xarchiver
+  yay -S git maven nodejs jdk8-openjdk
+  yay -S iw dialog wpa_supplicant
+  yay -S grim slurp enpass-bin rxvt-unicode-pixbuf
+  yay -S google-chrome
 
   chsh -s /bin/zsh "$username"
-
-  sudo -u "$username" yay -Sy swaylock-blur-bin google-chrome enpass-bin network-manager-applet-indicator rxvt-unicode-pixbuf otf-font-awesome system-san-francisco-font-git ttf-vlgothic screengrab pasystray pulseaudio-ctl gotop
 
   echo "#!/bin/bash" > /usr/local/bin/google-chrome-stable-incognito
   echo "google-chrome-stable --incognito" >> /usr/local/bin/google-chrome-stable-incognito
@@ -73,12 +84,11 @@ then
   sudo -u "$username" xdg-user-dirs-update
   cd /
 
-  sudo -u "$username" mkdir "$home_dir/code"
-  sudo -u "$username" git clone https://github.com/cinocode/dvorak_ger_io "$home_dir/code/dvorak_ger_io"
-  chown -R ole:ole "$home_dir/code/dvorak_ger_io"
-  cd "$home_dir/code/dvorak_ger_io"
+  sudo -u "$username" git clone https://github.com/cinocode/dvorak_ger_io "$home_dir/.dvorak_ger_io"
+  chown -R $username:users "$home_dir/.dvorak_ger_io"
+  cd "$home_dir/.dvorak_ger_io"
   sudo -u "$username" git checkout gk64
-  sh "$home_dir/code/dvorak_ger_io/install_xkb.sh"
+  sh "$home_dir/.dvorak_ger_io/install_xkb.sh"
   cd /
 
 fi
@@ -86,7 +96,7 @@ fi
 if [ "$opt_dot" = "y" ]
 then
   sudo -u "$username" git clone https://github.com/cinocode/dotfiles "$home_dir/.dotfiles"
-  chown -R ole:ole "$home_dir/.dotfiles"
+  chown -R $username:users "$home_dir/.dotfiles"
   cd "$home_dir/.dotfiles/"
   sudo -u "$username" git checkout sway
   cd /
@@ -99,5 +109,7 @@ systemctl start NetworkManager
 systemctl enable NetworkManager
 systemctl enable systemd-timesyncd
 
-echo If everything looks clean, you probably want to rm -rf /rice
-echo Also this is a good time to take care of graphic card drivers or microcode
+mv /rice "$home_dir/.rice"
+chown -R $username:users "$home_dir/.rice"
+
+echo This is a good time to take care of graphic card drivers or microcode
