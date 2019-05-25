@@ -95,6 +95,7 @@ fi
 
 systemctl start NetworkManager
 systemctl enable NetworkManager
+systemctl enable systemd-timesyncd
 
 echo If everything looks clean, you probably want to rm -rf /rice
 echo Also this is a good time to take care of graphic card drivers or microcode
