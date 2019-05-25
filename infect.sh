@@ -75,6 +75,7 @@ then
 
   sudo -u "$username" mkdir "$home_dir/code"
   sudo -u "$username" git clone https://github.com/cinocode/dvorak_ger_io "$home_dir/code/dvorak_ger_io"
+  chown -R ole:ole "$home_dir/code/dvorak_ger_io"
   cd "$home_dir/code/dvorak_ger_io"
   sudo -u "$username" git checkout gk64
   sh "$home_dir/code/dvorak_ger_io/install_xkb.sh"
@@ -85,6 +86,7 @@ fi
 if [ "$opt_dot" = "y" ]
 then
   sudo -u "$username" git clone https://github.com/cinocode/dotfiles "$home_dir/.dotfiles"
+  chown -R ole:ole "$home_dir/.dotfiles"
   cd "$home_dir/.dotfiles/"
   sudo -u "$username" git checkout sway
   cd /
