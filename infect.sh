@@ -63,12 +63,12 @@ then
   echo "google-chrome-stable --incognito" >> /usr/local/bin/google-chrome-stable-incognito
   chmod +x /usr/local/bin/google-chrome-stable-incognito
 
-  echo DESKTOP=$home_dir > /etc/xdg/user-dirs.defaults
-  echo DOWNLOAD=down >> /etc/xdg/user-dirs.defaults
-  echo DOCUMENTS=doc >> /etc/xdg/user-dirs.defaults
-  echo MUSIC=music >> /etc/xdg/user-dirs.defaults
-  echo PICTURES=pic >> /etc/xdg/user-dirs.defaults
-  echo VIDEOS=vid >> /etc/xdg/user-dirs.defaults
+  echo 'DESKTOP=$home_dir' > /etc/xdg/user-dirs.defaults
+  echo 'DOWNLOAD=down' >> /etc/xdg/user-dirs.defaults
+  echo 'DOCUMENTS=doc' >> /etc/xdg/user-dirs.defaults
+  echo 'MUSIC=music' >> /etc/xdg/user-dirs.defaults
+  echo 'PICTURES=pic' >> /etc/xdg/user-dirs.defaults
+  echo 'VIDEOS=vid' >> /etc/xdg/user-dirs.defaults
   cd "$home_dir"
   sudo -u "$username" xdg-user-dirs-update
   cd /
