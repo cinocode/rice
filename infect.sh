@@ -39,6 +39,8 @@ then
   sudo -u "$username" makepkg --noconfirm -si
   cd ..
   rm -rf yay
+  rm yay.tar.gz
+  cd /
 fi
 
 if [ "$opt_install" = "y" ]
