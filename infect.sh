@@ -67,7 +67,7 @@ then
   chmod +x /usr/local/bin/google-chrome-stable-incognito
 
   echo DESKTOP=$home_dir > /etc/xdg/user-dirs.defaults
-  echo DOWNLOAD=down > /etc/xdg/user-dirs.defaults
+  echo DOWNLOAD=down >> /etc/xdg/user-dirs.defaults
   echo DOCUMENTS=doc >> /etc/xdg/user-dirs.defaults
   echo MUSIC=music >> /etc/xdg/user-dirs.defaults
   echo PICTURES=pic >> /etc/xdg/user-dirs.defaults
