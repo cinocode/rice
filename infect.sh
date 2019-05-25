@@ -69,7 +69,9 @@ then
   echo MUSIC=music >> /etc/xdg/user-dirs.defaults
   echo PICTURES=pic >> /etc/xdg/user-dirs.defaults
   echo VIDEOS=vid >> /etc/xdg/user-dirs.defaults
+  cd "$home_dir"
   sudo -u "$username" xdg-user-dirs-update
+  cd /
 
   sudo -u "$username" mkdir "$home_dir/code"
   sudo -u "$username" git clone https://github.com/cinocode/dvorak_ger_io "$home_dir/code/dvorak_ger_io"
