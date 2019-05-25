@@ -52,6 +52,12 @@ fi
 
 if [ "$opt_install" = "y" ]
 then
+
+  echo '[archzfs]' >> /etc/pacman.conf
+  echo 'Server = http://archzfs.com/$repo/$arch' >> /etc/pacman.conf
+  pacman-key -r F75D9D76
+  pacman-key --lsign-key F75D9D76
+
   pacman -Syy
 
   pacman -Su sway waybar ttf-inconsolata ttf-liberation ttf-dejavu terminus-fonts zsh tmux gvim keychain openssh rofi w3m feh acpi sysstat alsa-utils ntfs-3g pavucontrol pulseaudio pulseaudio-bluetooth networkmanager networkmanager-openconnect vlc thunar ranger arc-gtk-theme viewnior tumbler ffmpegthumbnailer gvfs gvfs-smb xarchiver redshift xdg-user-dirs maven nodejs jdk8-openjdk
