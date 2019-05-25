@@ -26,15 +26,6 @@ then
   echo [Service] > /etc/systemd/system/getty@tty1.service.d/override.conf
   echo ExecStart= >> /etc/systemd/system/getty@tty1.service.d/override.conf
   echo ExecStart=-/usr/bin/agetty --autologin $username --noclear %I $TERM >> /etc/systemd/system/getty@tty1.service.d/override.conf
-
-  pacman -S git
-
-  sudo -u "$username" mkdir "$home_dir/code"
-  sudo -u "$username" git clone https://github.com/cinocode/dvorak_ger_io "$home_dir/code/dvorak_ger_io"
-  cd "$home_dir/code/dvorak_ger_io"
-  sudo -u "$username" git checkout gk64
-  sh "$home_dir/code/dvorak_ger_io/install_xkb.sh"
-  cd /
 fi
 
 if [ "$opt_yay" = "y" ]
@@ -60,7 +51,7 @@ then
 
   pacman -Syy
 
-  pacman -Su sway waybar ttf-inconsolata ttf-liberation ttf-dejavu terminus-fonts zsh tmux gvim keychain openssh rofi w3m feh acpi sysstat alsa-utils ntfs-3g pavucontrol pulseaudio pulseaudio-bluetooth networkmanager networkmanager-openconnect vlc thunar ranger arc-gtk-theme viewnior tumbler ffmpegthumbnailer gvfs gvfs-smb xarchiver redshift xdg-user-dirs maven nodejs jdk8-openjdk
+  pacman -Su sway waybar ttf-inconsolata ttf-liberation ttf-dejavu terminus-fonts zsh tmux gvim keychain openssh rofi w3m feh acpi sysstat alsa-utils ntfs-3g pavucontrol pulseaudio pulseaudio-bluetooth networkmanager networkmanager-openconnect vlc thunar ranger arc-gtk-theme viewnior tumbler ffmpegthumbnailer gvfs gvfs-smb xarchiver redshift xdg-user-dirs git maven nodejs jdk8-openjdk
 
   chsh -s /bin/zsh "$username"
 
@@ -77,6 +68,14 @@ then
   echo PICTURES=pic >> /etc/xdg/user-dirs.defaults
   echo VIDEOS=vid >> /etc/xdg/user-dirs.defaults
   sudo -u "$username" xdg-user-dirs-update
+
+  sudo -u "$username" mkdir "$home_dir/code"
+  sudo -u "$username" git clone https://github.com/cinocode/dvorak_ger_io "$home_dir/code/dvorak_ger_io"
+  cd "$home_dir/code/dvorak_ger_io"
+  sudo -u "$username" git checkout gk64
+  sh "$home_dir/code/dvorak_ger_io/install_xkb.sh"
+  cd /
+
 fi
 
 if [ "$opt_dot" = "y" ]
