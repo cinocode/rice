@@ -81,6 +81,9 @@ fi
 if [ "$opt_dot" = "y" ]
 then
   sudo -u "$username" git clone https://github.com/cinocode/dotfiles "$home_dir/.dotfiles"
+  cd "$home_dir/.dotfiles/"
+  sudo -u "$username" git checkout sway
+  cd /
   sudo -u "$username" sh "$home_dir/.dotfiles/init_configs.sh"
   sudo -u "$username" sh "$home_dir/.dotfiles/init_wallpaper.sh"
   sudo -u "$username" sh "$home_dir/.dotfiles/init_vim.sh"
