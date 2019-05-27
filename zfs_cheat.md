@@ -194,17 +194,13 @@ options cryptdevice=/dev/disk/by-uuid/<uuid>:cryptroot zfs=zmypool/root/three rw
 # cycle initramfs
 sudo rm /boot/initramfs-linux-three.img
 sudo mv /boot/initramfs-linux-two.img /boot/initramfs-linux-three.img
-sudo rm /boot/initramfs-linux-two.img
 sudo mv /boot/initramfs-linux-one.img /boot/initramfs-linux-two.img
-sudo rm /boot/initramfs-linux-one.img
 sudo cp /boot/initramfs-linux.img /boot/initramfs-linux-one.img
 
 # cycle kernel
 sudo rm /boot/vmlinuz-linux-three
 sudo mv /boot/vmlinuz-linux-two /boot/vmlinuz-linux-three
-sudo rm /boot/vmlinuz-linux-two
 sudo mv /boot/vmlinuz-linux-one /boot/vmlinuz-linux-two
-sudo rm /boot/vmlinuz-linux-one
 sudo cp /boot/vmlinuz-linux /boot/vmlinuz-linux-one
 
 # cycle snaps and clones
@@ -222,6 +218,7 @@ sudo zfs set mountpoint=/ zmypool/root/one
 sudo zfs set compression=lz4 zmypool/root/one
 
 # update the system
+sudo reflector --country France --country Germany --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 yay
 
 # report
