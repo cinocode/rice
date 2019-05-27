@@ -62,7 +62,7 @@ then
   yay -S pavucontrol pulseaudio pulseaudio-bluetooth pasystray pulseaudio-ctl
   yay -S networkmanager networkmanager-openconnect network-manager-applet-indicator
   yay -S vlc arc-gtk-theme viewnior tumbler ffmpegthumbnailer
-  yay -S gvfs gvfs-smb xarchiver
+  yay -S gvfs gvfs-smb xarchiver reflector
   yay -S git maven nodejs jdk8-openjdk
   yay -S iw dialog wpa_supplicant
   yay -S grim slurp enpass-bin rxvt-unicode-pixbuf
