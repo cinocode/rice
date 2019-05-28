@@ -37,13 +37,14 @@
    - Should you have a 4k disk then add -o ashift=12 to the zpool create command.
  - (modprobe zfs)
  - touch /etc/zfs/zpool.cache
- - zpool create -o cachefile=/etc/zfs/zpool.cache -o autotrim=on -m none -R /mnt zmypool /dev/mapper/cryptroot2
+ - zpool create -o cachefile=/etc/zfs/zpool.cache -o autotrim=on -O acltype=posixacl -m none -R /mnt zmypool /dev/mapper/cryptroot2
 
 5. Create the Datasets
 
  - zfs create -o mountpoint=none zmypool/root
- - zfs create -o mountpoint=/ -o canmount=noauto -o compression=lz4 zmypool/root/default
- - zfs create -o mountpoint=/home -o compression=lz4 zmypool/home
+ - zfs create -o mountpoint=/ -o canmount=noauto -o zmypool/root/default
+ - zfs create -o mountpoint=/home -o zmypool/home
+ - zfs create -o mountpoint=/home/code_lz -o compression=lz4 zmypool/code_lz
  - zfs create -o mountpoint=/var/cache/pacman/pkg -o compression=lz4 zmypool/pkg
  - zfs create -o mountpoint=/var/log -o compression=lz4 zmypool/log
 
