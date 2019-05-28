@@ -21,9 +21,9 @@
 
 3. Create the Datasets
 
- - zfs create -o mountpoint=none -o encryption=aes-256-gcm -o keyformat=passphrase zmypool/enc
- - zfs create -o mountpoint=none zmypool/enc/root
+ - zfs create -o mountpoint=none -o encryption=on -o keyformat=passphrase zmypool/enc
  - zfs create -o mountpoint=none -o compression=lz4 zmypool/enc/co
+ - zfs create -o mountpoint=none zmypool/enc/root
  - zfs create -o mountpoint=/ -o canmount=noauto -o zmypool/enc/root/default
  - zfs create -o mountpoint=/home -o zmypool/enc/home
  - zfs create -o mountpoint=/var/cache/pacman/pkg zmypool/enc/co/pkg
@@ -85,7 +85,7 @@
 timeout 1
 default arch
  - /boot/loader/entries/arch.conf
-title   Arch Linux
+title   The Life of Pablo
 linux   /vmlinuz-linux
 initrd  /intel-ucode.img
 initrd  /initramfs-linux.img
@@ -135,19 +135,19 @@ editor no
  - cp /boot/initramfs-linux.img /boot/initramfs-linux-three.img
 
  - /boot/loader/entries/barch.conf
-title   Arch Linux (Latest Snapshot)
+title   My Beautiful Dark Twisted Fantasy
 linux   /vmlinuz-linux-one
 initrd  /intel-ucode.img
 initrd  /initramfs-linux-one.img
 options zfs=zmypool/enc/root/one rw
  - /boot/loader/entries/carch.conf
-title   Arch Linux (Second Snapshot)
+title   Late Registration
 linux   /vmlinuz-linux-two
 initrd  /intel-ucode.img
 initrd  /initramfs-linux-two.img
 options zfs=zmypool/enc/root/two rw
  - /boot/loader/entries/darch.conf
-title   Arch Linux (Third Snapshot)
+title   The College Dropout
 linux   /vmlinuz-linux-three
 initrd  /intel-ucode.img
 initrd  /initramfs-linux-three.img
