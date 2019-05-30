@@ -38,7 +38,7 @@
 4. Mount everything
 
  - zpool export ${ZRPOOL}
- - zpool import -l -R /mnt ${ZRPOOL}
+ - zpool import -R /mnt ${ZRPOOL}
  - blkid /dev/sda1
  - mkdir /mnt/boot
  - mount /dev/disk/by-uuid/UUID_OF_DISK /mnt/boot
@@ -55,14 +55,6 @@
  - take care of locale / timezone / hostname / passwd
  - systemctl enable dhcpcd
  - if no lan access: pacman -S iw wpa_supplicant dialog
- - manual fstab example
-# Static information about the filesystems.
-# See fstab(5) for details.
-
-# <file system> <dir> <type> <options> <dump> <pass>
-/dev/disk/by-uuid/CDC9-1042      	/boot     	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro	0 2
-
-/dev/zvol/zt420pool/swap none swap discard 0 0
 
 6. Enable Zfs on Fresh System
 
