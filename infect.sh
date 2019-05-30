@@ -48,11 +48,6 @@ fi
 if [ "$opt_install" = "y" ]
 then
 
-  echo '[archzfs]' >> /etc/pacman.conf
-  echo 'Server = http://archzfs.com/$repo/$arch' >> /etc/pacman.conf
-  pacman-key -r F75D9D76
-  pacman-key --lsign-key F75D9D76
-
   pacman -Syyu
 
   yay -S sway swaylock-blur-bin waybar xorg-server-xwayland 
