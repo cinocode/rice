@@ -18,26 +18,27 @@
    - Should you have a 4k disk then add -o ashift=12 to the zpool create command.
  - Check device id with blkid /dev/mapper/cryptzfs
  - (modprobe zfs)
- - touch /etc/zfs/zpool.cache
- - zpool create -o cachefile=/etc/zfs/zpool.cache -o autotrim=on -O acltype=posixacl -m none -R /mnt zmypool /dev/disk/by-id/INSERT_DISKID
+ - export ZRPOOL=zmypool
+ - touch /etc/zfs/${ZRPOOL}.cache
+ - zpool create -o cachefile=/etc/zfs/${ZRPOOL}.cache -o autotrim=on -O acltype=posixacl -m none -R /mnt ${ZRPOOL} /dev/mapper/cryptzfs
 
 3. Create the Datasets
 
- - zfs create -o mountpoint=none -o compression=lz4 zmypool/co
- - zfs create -o mountpoint=none zmypool/root
- - zfs create -o mountpoint=/ -o canmount=noauto -o zmypool/root/default
- - zfs create -o mountpoint=/home -o zmypool/home
- - zfs create -o mountpoint=/var/cache/pacman/pkg zmypool/co/pkg
- - zfs create -o mountpoint=/var/log -o com.sun:auto-snapshot=false zmypool/co/log
+ - zfs create -o mountpoint=none -o compression=lz4 ${ZRPOOL}/co
+ - zfs create -o mountpoint=none ${ZRPOOL}/root
+ - zfs create -o mountpoint=/ -o canmount=noauto ${ZRPOOL}/root/default
+ - zfs create -o mountpoint=/home ${ZRPOOL}/home
+ - zfs create -o mountpoint=/var/cache/pacman/pkg ${ZRPOOL}/co/pkg
+ - zfs create -o mountpoint=/var/log -o com.sun:auto-snapshot=false ${ZRPOOL}/co/log
 
- - zfs create -V 4G -b $(getconf PAGESIZE) -o compression=zle -o logbias=throughput -o sync=always -o primarycache=metadata -o secondarycache=none -o com.sun:auto-snapshot=false zmypool/swap
- - mkswap -f /dev/zvol/zmypool/swap
- - echo /dev/zvol/zmypool/swap none swap discard 0 0 >> /etc/fstab
+ - zfs create -V 4G -b $(getconf PAGESIZE) -o compression=zle -o logbias=throughput -o sync=always -o primarycache=metadata -o secondarycache=none -o com.sun:auto-snapshot=false ${ZRPOOL}/swap
+ - mkswap -f /dev/zvol/${ZRPOOL}/swap
+ - echo /dev/zvol/${ZRPOOL}/swap none swap discard 0 0 >> /etc/fstab
 
 4. Mount everything
 
- - zpool export zmypool
- - zpool import -l -R /mnt zmypool
+ - zpool export ${ZRPOOL}
+ - zpool import -l -R /mnt ${ZRPOOL}
  - blkid /dev/sda1
  - mkdir /mnt/boot
  - mount /dev/disk/by-uuid/UUID_OF_DISK /mnt/boot
@@ -48,7 +49,7 @@
  - pacstrap -i /mnt base base-devel git sudo vim
  - genfstab -U -p /mnt | grep boot >> /mnt/etc/fstab
  - delete zfs entries from /mnt/etc/fstab
- - zpool set cachefile=/etc/zfs/zpool.cache zmypool
+ - zpool set cachefile=/etc/zfs/${ZRPOOL}.cache ${ZRPOOL}
  - cp /etc/zfs/zpool.cache /mnt/etc/zfs/zpool.cache
  - arch-chroot
  - take care of locale / timezone / hostname / passwd
@@ -65,7 +66,7 @@
  - pacman-key --lsign-key 0ee7a126
  - pacman -Syy
  - pacman -S zfs-linux
- - zpool set cachefile=/etc/zfs/zpool.cache zmypool
+ - zpool set cachefile=/etc/zfs/zpool.cache ${ZRPOOL}
  - check zpool cache for contents to be sure
 
 7. Setup Mkinitcpio
@@ -98,34 +99,34 @@ options cryptdevice=/dev/disk/by-uuid/<uuid>:cryptroot zfs=zmypool/root/default 
 10. After the first boot
 
  - zgenhostid $(hostid)
- - zfs create -o mountpoint=/home/ole/music -o zmypool/co/music
- - zfs create -o mountpoint=/home/ole/code_lz zmypool/co/code_lz
- - zpool set cachefile=/etc/zfs/zpool.cache zmypool
+ - zfs create -o mountpoint=/home/ole/music -o ${ZRPOOL}/co/music
+ - zfs create -o mountpoint=/home/ole/code_lz ${ZRPOOL}/co/code_lz
+ - zpool set cachefile=/etc/zfs/zpool.cache ${ZRPOOL}
  - mkinitcpio -p linux
  - /boot/loader/loader.conf
 editor no
 
 11. Setup Multiple Boot Environments
 
- - zfs snapshot zmypool/root/default@one
- - zfs snapshot zmypool/root/default@two
- - zfs snapshot zmypool/root/default@three
+ - zfs snapshot ${ZRPOOL}/root/default@one
+ - zfs snapshot ${ZRPOOL}/root/default@two
+ - zfs snapshot ${ZRPOOL}/root/default@three
 
- - zfs clone zmypool/root/default@one zmypool/root/one
- - zfs clone zmypool/root/default@two zmypool/root/two
- - zfs clone zmypool/root/default@three zmypool/root/three
+ - zfs clone ${ZRPOOL}/root/default@one ${ZRPOOL}/root/one
+ - zfs clone ${ZRPOOL}/root/default@two ${ZRPOOL}/root/two
+ - zfs clone ${ZRPOOL}/root/default@three ${ZRPOOL}/root/three
 
- - zfs set canmount=noauto zmypool/root/one
- - zfs set canmount=noauto zmypool/root/two
- - zfs set canmount=noauto zmypool/root/three
+ - zfs set canmount=noauto ${ZRPOOL}/root/one
+ - zfs set canmount=noauto ${ZRPOOL}/root/two
+ - zfs set canmount=noauto ${ZRPOOL}/root/three
 
- - zfs set mountpoint=/ zmypool/root/one
- - zfs set mountpoint=/ zmypool/root/two
- - zfs set mountpoint=/ zmypool/root/three
+ - zfs set mountpoint=/ ${ZRPOOL}/root/one
+ - zfs set mountpoint=/ ${ZRPOOL}/root/two
+ - zfs set mountpoint=/ ${ZRPOOL}/root/three
 
- - zfs set compression=lz4 zmypool/root/one
- - zfs set compression=lz4 zmypool/root/two
- - zfs set compression=lz4 zmypool/root/three
+ - zfs set compression=lz4 ${ZRPOOL}/root/one
+ - zfs set compression=lz4 ${ZRPOOL}/root/two
+ - zfs set compression=lz4 ${ZRPOOL}/root/three
 
  - cp /boot/vmlinuz-linux /boot/vmlinuz-linux-one
  - cp /boot/vmlinuz-linux /boot/vmlinuz-linux-two
