@@ -22,7 +22,7 @@
 
 3. Create the Datasets
 
- - zfs create -o mountpoint=none -o encryption=aes-256-gcm -o keyformat=passphrase zmypool/enc
+ - zfs create -o mountpoint=none -o encryption=aes-256-gcm -o keyformat=passphrase ${ZRPOOL}/enc
  - zfs create -o mountpoint=none -o compression=lz4 ${ZRPOOL}/enc/co
  - zfs create -o mountpoint=none ${ZRPOOL}/enc/root
  - zfs create -o mountpoint=/ ${ZRPOOL}/enc/root/default
@@ -31,7 +31,7 @@
  - zfs create -o mountpoint=/var/log -o com.sun:auto-snapshot=false ${ZRPOOL}/enc/co/log
 
  - zfs create -V 8G -b $(getconf PAGESIZE) -o compression=zle -o logbias=throughput -o sync=always -o primarycache=metadata -o secondarycache=none -o com.sun:auto-snapshot=false ${ZRPOOL}/enc/swap
- - mkswap -f /dev/zvol/${ZRPOOL}/swap
+ - mkswap -f /dev/zvol/${ZRPOOL}/enc/swap
 
 4. Mount everything
 
