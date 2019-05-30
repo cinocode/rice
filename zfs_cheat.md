@@ -109,33 +109,32 @@ editor no
 
 11. Setup Multiple Boot Environments
 
- - zfs snapshot ${ZRPOOL}/root/default@one
- - zfs snapshot ${ZRPOOL}/root/default@two
- - zfs snapshot ${ZRPOOL}/root/default@three
+ZRPOOL=zmypool
+ZROOT=${ZRPOOL}/root
 
- - zfs clone ${ZRPOOL}/root/default@one ${ZRPOOL}/root/one
- - zfs clone ${ZRPOOL}/root/default@two ${ZRPOOL}/root/two
- - zfs clone ${ZRPOOL}/root/default@three ${ZRPOOL}/root/three
+zfs snapshot ${ZROOT}/default@one
+zfs snapshot ${ZROOT}/default@two
+zfs snapshot ${ZROOT}/default@three
 
- - zfs set canmount=noauto ${ZRPOOL}/root/one
- - zfs set canmount=noauto ${ZRPOOL}/root/two
- - zfs set canmount=noauto ${ZRPOOL}/root/three
+zfs clone ${ZROOT}/default@one ${ZROOT}/one
+zfs clone ${ZROOT}/default@two ${ZROOT}/two
+zfs clone ${ZROOT}/default@three ${ZROOT}/three
 
- - zfs set mountpoint=/ ${ZRPOOL}/root/one
- - zfs set mountpoint=/ ${ZRPOOL}/root/two
- - zfs set mountpoint=/ ${ZRPOOL}/root/three
+zfs set canmount=noauto ${ZROOT}/one
+zfs set canmount=noauto ${ZROOT}/two
+zfs set canmount=noauto ${ZROOT}/three
 
- - zfs set compression=lz4 ${ZRPOOL}/root/one
- - zfs set compression=lz4 ${ZRPOOL}/root/two
- - zfs set compression=lz4 ${ZRPOOL}/root/three
+zfs set mountpoint=/ ${ZROOT}/one
+zfs set mountpoint=/ ${ZROOT}/two
+zfs set mountpoint=/ ${ZROOT}/three
 
- - cp /boot/vmlinuz-linux /boot/vmlinuz-linux-one
- - cp /boot/vmlinuz-linux /boot/vmlinuz-linux-two
- - cp /boot/vmlinuz-linux /boot/vmlinuz-linux-three
+cp /boot/vmlinuz-linux /boot/vmlinuz-linux-one
+cp /boot/vmlinuz-linux /boot/vmlinuz-linux-two
+cp /boot/vmlinuz-linux /boot/vmlinuz-linux-three
 
- - cp /boot/initramfs-linux.img /boot/initramfs-linux-one.img
- - cp /boot/initramfs-linux.img /boot/initramfs-linux-two.img
- - cp /boot/initramfs-linux.img /boot/initramfs-linux-three.img
+cp /boot/initramfs-linux.img /boot/initramfs-linux-one.img
+cp /boot/initramfs-linux.img /boot/initramfs-linux-two.img
+cp /boot/initramfs-linux.img /boot/initramfs-linux-three.img
 
  - /boot/loader/entries/barch.conf
 title   Arch Linux (Latest Snapshot)
@@ -159,42 +158,43 @@ options cryptdevice=/dev/disk/by-uuid/<uuid>:cryptroot zfs=zmypool/root/three rw
  - /usr/local/bin/zyay
 #!/bin/bash
 ZRPOOL=zmypool
+ZROOT=${ZRPOOL}/root
 
-# cycle initramfs
+echo cycle initramfs
 sudo rm /boot/initramfs-linux-three.img
 sudo mv /boot/initramfs-linux-two.img /boot/initramfs-linux-three.img
 sudo mv /boot/initramfs-linux-one.img /boot/initramfs-linux-two.img
 sudo cp /boot/initramfs-linux.img /boot/initramfs-linux-one.img
 
-# cycle kernel
+echo cycle kernel
 sudo rm /boot/vmlinuz-linux-three
 sudo mv /boot/vmlinuz-linux-two /boot/vmlinuz-linux-three
 sudo mv /boot/vmlinuz-linux-one /boot/vmlinuz-linux-two
 sudo cp /boot/vmlinuz-linux /boot/vmlinuz-linux-one
 
-# cycle snaps and clones
-sudo zfs destroy -R ${ZRPOOL}/root/default@three
-sudo zfs rename ${ZRPOOL}/root/default@two ${ZRPOOL}/root/default@three
-sudo zfs rename ${ZRPOOL}/root/two ${ZRPOOL}/root/three
-sudo zfs rename ${ZRPOOL}/root/default@one ${ZRPOOL}/root/default@two
-sudo zfs rename ${ZRPOOL}/root/one ${ZRPOOL}/root/two
+echo cycle snaps and clones
+sudo zfs destroy -R ${ZROOT}/default@three
+sudo zfs rename ${ZROOT}/default@two ${ZROOT}/default@three
+sudo zfs rename ${ZROOT}/two ${ZROOT}/three
+sudo zfs rename ${ZROOT}/default@one ${ZROOT}/default@two
+sudo zfs rename ${ZROOT}/one ${ZROOT}/two
 
-# create new snap one
-sudo zfs snapshot ${ZRPOOL}/root/default@one
-sudo zfs clone ${ZRPOOL}/root/default@one ${ZRPOOL}/root/one
-sudo zfs set canmount=noauto ${ZRPOOL}/root/one
-sudo zfs set mountpoint=/ ${ZRPOOL}/root/one
-sudo zfs set compression=lz4 ${ZRPOOL}/root/one
+echo create new snap one
+sudo zfs snapshot ${ZROOT}/default@one
+sudo zfs clone ${ZROOT}/default@one ${ZROOT}/one
+sudo zfs set canmount=noauto ${ZROOT}/one
+sudo zfs set mountpoint=/ ${ZROOT}/one
 
-# update the system
+echo update the system
 sudo reflector --country France --country Germany --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 yay
 
-# report
+echo report changes
 sudo mkdir -p /var/log/upgrade
-sudo zfs snapshot ${ZRPOOL}/root/default@upgrade
-sudo zfs diff ${ZRPOOL}/root/default@one ${ZRPOOL}/root/default@upgrade | sudo tee "/var/log/upgrade/$(date +"%Y_%m_%d_%H_%M")_yay_diff.log" > /dev/null
-sudo zfs destroy ${ZRPOOL}/root/default@upgrade
+sudo zfs snapshot ${ZROOT}/default@upgrade
+sudo zfs diff ${ZROOT}/default@one ${ZROOT}/default@upgrade | sudo tee "/var/log/upgrade/$(date +"%Y_%m_%d_%H_%M")_yay_diff.log" > /dev/null
+sudo zfs destroy ${ZROOT}/default@upgrade
 
-# scrub
+echo scrub pool
 sudo zpool scrub ${ZRPOOL}
+
