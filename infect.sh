@@ -2,8 +2,9 @@
 systemctl start dhcpcd
 systemctl enable dhcpcd
 ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
-sleep 2
+sleep 1
 timedatectl set-ntp true
+sleep 1
 
 read -p "Username: " username
 home_dir="/home/$username"
