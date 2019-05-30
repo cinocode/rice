@@ -26,7 +26,7 @@
 
  - zfs create -o mountpoint=none -o compression=lz4 ${ZRPOOL}/co
  - zfs create -o mountpoint=none ${ZRPOOL}/root
- - zfs create -o mountpoint=/ -o canmount=noauto ${ZRPOOL}/root/default
+ - zfs create -o mountpoint=/ ${ZRPOOL}/root/default
  - zfs create -o mountpoint=/home ${ZRPOOL}/home
  - zfs create -o mountpoint=/var/cache/pacman/pkg ${ZRPOOL}/co/pkg
  - zfs create -o mountpoint=/var/log -o com.sun:auto-snapshot=false ${ZRPOOL}/co/log
@@ -76,6 +76,7 @@
  - mkinitcpio -p linux
 
 8. Enable Zfs Services
+ - zfs set canmount=noauto ${ZRPOOL}/root/default
  - systemctl enable zfs.target
  - systemctl enable zfs-import-cache
  - systemctl enable zfs-mount
