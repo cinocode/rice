@@ -1,10 +1,8 @@
 1. Partition
 
  - efi boot part size: 300mb + (25mb x number_of_bootable_snapshots)
- - put the rest in partition that will contain luks
+ - put the rest in solaris root type partition
  - mkfs.fat -F32 /dev/sda1
- - cryptsetup luksFormat /dev/sda2
- - cryptsetup open /dev/sda2 cryptzfs
 
 2. Create the Pool
 
@@ -16,28 +14,29 @@
    - Sector size (logical/physical): 512B/512B <--- here
    - Partition Table: gpt
    - Should you have a 4k disk then add -o ashift=12 to the zpool create command.
- - Check device id with blkid /dev/mapper/cryptzfs
+ - Check device id with blkid /dev/sda2
  - (modprobe zfs)
  - export ZRPOOL=zmypool
  - touch /etc/zfs/${ZRPOOL}.cache
- - zpool create -o cachefile=/etc/zfs/${ZRPOOL}.cache -o autotrim=on -O acltype=posixacl -m none -R /mnt ${ZRPOOL} /dev/mapper/cryptzfs
+ - zpool create -o cachefile=/etc/zfs/${ZRPOOL}.cache -o autotrim=on -O acltype=posixacl -m none -R /mnt ${ZRPOOL} /dev/disk/by-id/INSERT_DISKID
 
 3. Create the Datasets
 
- - zfs create -o mountpoint=none -o compression=lz4 ${ZRPOOL}/co
- - zfs create -o mountpoint=none ${ZRPOOL}/root
- - zfs create -o mountpoint=/ ${ZRPOOL}/root/default
- - zfs create -o mountpoint=/home ${ZRPOOL}/home
- - zfs create -o mountpoint=/var/cache/pacman/pkg ${ZRPOOL}/co/pkg
- - zfs create -o mountpoint=/var/log -o com.sun:auto-snapshot=false ${ZRPOOL}/co/log
+ - zfs create -o mountpoint=none -o encryption=aes-256-gcm -o keyformat=passphrase zmypool/enc
+ - zfs create -o mountpoint=none -o compression=lz4 ${ZRPOOL}/enc/co
+ - zfs create -o mountpoint=none ${ZRPOOL}/enc/root
+ - zfs create -o mountpoint=/ ${ZRPOOL}/enc/root/default
+ - zfs create -o mountpoint=/home ${ZRPOOL}/enc/home
+ - zfs create -o mountpoint=/var/cache/pacman/pkg ${ZRPOOL}/enc/co/pkg
+ - zfs create -o mountpoint=/var/log -o com.sun:auto-snapshot=false ${ZRPOOL}/enc/co/log
 
- - zfs create -V 4G -b $(getconf PAGESIZE) -o compression=zle -o logbias=throughput -o sync=always -o primarycache=metadata -o secondarycache=none -o com.sun:auto-snapshot=false ${ZRPOOL}/swap
+ - zfs create -V 8G -b $(getconf PAGESIZE) -o compression=zle -o logbias=throughput -o sync=always -o primarycache=metadata -o secondarycache=none -o com.sun:auto-snapshot=false ${ZRPOOL}/enc/swap
  - mkswap -f /dev/zvol/${ZRPOOL}/swap
 
 4. Mount everything
 
  - zpool export ${ZRPOOL}
- - zpool import -R /mnt ${ZRPOOL}
+ - zpool import -l -R /mnt ${ZRPOOL}
  - blkid /dev/sda1
  - mkdir /mnt/boot
  - mount /dev/disk/by-uuid/UUID_OF_DISK /mnt/boot
@@ -47,7 +46,7 @@
  - Optimize mirror list
  - pacstrap -i /mnt base base-devel git sudo vim
  - genfstab -U -p /mnt | grep boot >> /mnt/etc/fstab
- - echo /dev/zvol/${ZRPOOL}/swap none swap discard 0 0 >> /mnt/etc/fstab
+ - echo /dev/zvol/${ZRPOOL}/enc/swap none swap discard 0 0 >> /mnt/etc/fstab
  - delete zfs entries from /mnt/etc/fstab
  - arch-chroot
  - take care of locale / timezone / hostname / passwd
@@ -71,11 +70,11 @@
 7. Setup Mkinitcpio
 
  - Edit /etc/mkinitcpio.conf
- - HOOKS="base udev keyboard autodetect keymap modconf block encrypt zfs filesystems"
+ - HOOKS="base udev keyboard autodetect keymap modconf block zfs filesystems"
  - mkinitcpio -p linux
 
 8. Enable Zfs Services
- - zfs set canmount=noauto ${ZRPOOL}/root/default
+ - zfs set canmount=noauto ${ZRPOOL}/enc/root/default
  - systemctl enable zfs.target
  - systemctl enable zfs-import-cache
  - systemctl enable zfs-mount
@@ -92,7 +91,7 @@ title   Arch Linux
 linux   /vmlinuz-linux
 initrd  /intel-ucode.img
 initrd  /initramfs-linux.img
-options cryptdevice=/dev/disk/by-uuid/<uuid>:cryptroot zfs=zmypool/root/default rw
+options cryptdevice=/dev/disk/by-uuid/<uuid>:cryptroot zfs=zmypool/enc/root/default rw
  - umount /mnt/boot
  - zpool export zroot
  - reboot
@@ -100,8 +99,8 @@ options cryptdevice=/dev/disk/by-uuid/<uuid>:cryptroot zfs=zmypool/root/default 
 10. After the first boot
 
  - zgenhostid $(hostid)
- - zfs create -o mountpoint=/home/ole/music -o ${ZRPOOL}/co/music
- - zfs create -o mountpoint=/home/ole/code_lz ${ZRPOOL}/co/code_lz
+ - zfs create -o mountpoint=/home/ole/music -o ${ZRPOOL}/enc/co/music
+ - zfs create -o mountpoint=/home/ole/code_lz ${ZRPOOL}/enc/co/code_lz
  - zpool set cachefile=/etc/zfs/zpool.cache ${ZRPOOL}
  - mkinitcpio -p linux
  - /boot/loader/loader.conf
@@ -110,7 +109,7 @@ editor no
 11. Setup Multiple Boot Environments
 
 ZRPOOL=zmypool
-ZROOT=${ZRPOOL}/root
+ZROOT=${ZRPOOL}/enc/root
 
 zfs snapshot ${ZROOT}/default@one
 zfs snapshot ${ZROOT}/default@two
@@ -141,24 +140,24 @@ title   Arch Linux (Latest Snapshot)
 linux   /vmlinuz-linux-one
 initrd  /intel-ucode.img
 initrd  /initramfs-linux-one.img
-options cryptdevice=/dev/disk/by-uuid/<uuid>:cryptroot zfs=zmypool/root/one rw
+options cryptdevice=/dev/disk/by-uuid/<uuid>:cryptroot zfs=zmypool/enc/root/one rw
  - /boot/loader/entries/carch.conf
 title   Arch Linux (Prior Snapshot)
 linux   /vmlinuz-linux-two
 initrd  /intel-ucode.img
 initrd  /initramfs-linux-two.img
-options cryptdevice=/dev/disk/by-uuid/<uuid>:cryptroot zfs=zmypool/root/two rw
+options cryptdevice=/dev/disk/by-uuid/<uuid>:cryptroot zfs=zmypool/enc/root/two rw
  - /boot/loader/entries/darch.conf
 title   Arch Linux (Oldest Snapshot)
 linux   /vmlinuz-linux-three
 initrd  /intel-ucode.img
 initrd  /initramfs-linux-three.img
-options cryptdevice=/dev/disk/by-uuid/<uuid>:cryptroot zfs=zmypool/root/three rw
+options cryptdevice=/dev/disk/by-uuid/<uuid>:cryptroot zfs=zmypool/enc/root/three rw
 
  - /usr/local/bin/zyay
 #!/bin/bash
 ZRPOOL=zmypool
-ZROOT=${ZRPOOL}/root
+ZROOT=${ZRPOOL}/enc/root
 
 echo cycle initramfs
 sudo rm /boot/initramfs-linux-three.img
