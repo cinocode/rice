@@ -65,7 +65,7 @@
  - pacman -Syy
  - pacman -S zfs-linux
  - export ZRPOOL=zmypool
- - zpool set cachefile=/etc/zfs/zpool.cache ${ZRPOOL}
+ - zpool set cachefile=/etc/zfs/${ZRPOOL}.cache ${ZRPOOL}
  - check zpool cache for contents to be sure
 
 7. Setup Mkinitcpio
@@ -82,6 +82,7 @@
  - systemctl enable zfs-import.target
 
 9. Install Bootloader
+ - pacman -S intel-ucode
  - bootctl install
  - /boot/loader/loader.conf
 timeout 1
