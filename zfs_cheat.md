@@ -33,7 +33,6 @@
 
  - zfs create -V 4G -b $(getconf PAGESIZE) -o compression=zle -o logbias=throughput -o sync=always -o primarycache=metadata -o secondarycache=none -o com.sun:auto-snapshot=false ${ZRPOOL}/swap
  - mkswap -f /dev/zvol/${ZRPOOL}/swap
- - echo /dev/zvol/${ZRPOOL}/swap none swap discard 0 0 >> /etc/fstab
 
 4. Mount everything
 
@@ -48,6 +47,7 @@
  - Optimize mirror list
  - pacstrap -i /mnt base base-devel git sudo vim
  - genfstab -U -p /mnt | grep boot >> /mnt/etc/fstab
+ - echo /dev/zvol/${ZRPOOL}/swap none swap discard 0 0 >> /mnt/etc/fstab
  - delete zfs entries from /mnt/etc/fstab
  - arch-chroot
  - take care of locale / timezone / hostname / passwd
@@ -64,6 +64,7 @@
  - pacman-key --lsign-key 0ee7a126
  - pacman -Syy
  - pacman -S zfs-linux
+ - export ZRPOOL=zmypool
  - zpool set cachefile=/etc/zfs/zpool.cache ${ZRPOOL}
  - check zpool cache for contents to be sure
 
