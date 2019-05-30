@@ -49,8 +49,6 @@
  - pacstrap -i /mnt base base-devel git sudo vim
  - genfstab -U -p /mnt | grep boot >> /mnt/etc/fstab
  - delete zfs entries from /mnt/etc/fstab
- - zpool set cachefile=/etc/zfs/${ZRPOOL}.cache ${ZRPOOL}
- - cp /etc/zfs/zpool.cache /mnt/etc/zfs/zpool.cache
  - arch-chroot
  - take care of locale / timezone / hostname / passwd
  - systemctl enable dhcpcd
