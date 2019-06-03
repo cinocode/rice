@@ -109,3 +109,4 @@ mv /rice "$home_dir/.rice"
 chown -R $username:users "$home_dir/.rice"
 
 echo This is a good time to take care of graphic card drivers or microcode
+echo With systemd boot you might want to run: 'yay -S systemd-boot-pacman-hook'
