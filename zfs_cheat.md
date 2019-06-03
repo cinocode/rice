@@ -91,7 +91,7 @@ title   Arch Linux
 linux   /vmlinuz-linux
 initrd  /intel-ucode.img
 initrd  /initramfs-linux.img
-options cryptdevice=/dev/disk/by-uuid/<uuid>:cryptroot zfs=zmypool/enc/root/default rw
+options zfs=zmypool/enc/root/default zfs_force=on rw
  - umount /mnt/boot
  - zpool export zroot
  - reboot
@@ -140,19 +140,19 @@ title   Arch Linux (Latest Snapshot)
 linux   /vmlinuz-linux-one
 initrd  /intel-ucode.img
 initrd  /initramfs-linux-one.img
-options cryptdevice=/dev/disk/by-uuid/<uuid>:cryptroot zfs=zmypool/enc/root/one rw
+options zfs=zmypool/enc/root/one zfs_force=on rw
  - /boot/loader/entries/carch.conf
 title   Arch Linux (Prior Snapshot)
 linux   /vmlinuz-linux-two
 initrd  /intel-ucode.img
 initrd  /initramfs-linux-two.img
-options cryptdevice=/dev/disk/by-uuid/<uuid>:cryptroot zfs=zmypool/enc/root/two rw
+options zfs=zmypool/enc/root/two zfs_force=on rw
  - /boot/loader/entries/darch.conf
 title   Arch Linux (Oldest Snapshot)
 linux   /vmlinuz-linux-three
 initrd  /intel-ucode.img
 initrd  /initramfs-linux-three.img
-options cryptdevice=/dev/disk/by-uuid/<uuid>:cryptroot zfs=zmypool/enc/root/three rw
+options zfs=zmypool/enc/root/three zfs_force=on rw
 
  - /usr/local/bin/zyay
 #!/bin/bash
