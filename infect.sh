@@ -95,9 +95,9 @@ then
   sudo -u "$username" yadm clone https://github.com/cinocode/dotfiles
   sudo -u "$username" sh "$home_dir/.config/dots/init_vim.sh"
   echo '#!/bin/bash' > .config/wallpaper/set
-  echo 'swaymsg output "*" background /home/ole/.config/wallpaper/background.png fill' >> .config/wallpaper/set
+  echo 'swaymsg output "*" background ~/.config/wallpaper/background.png fill' >> .config/wallpaper/set
   chmod +x .config/wallpaper/set
-  chown ole:users .config/wallpaper/set
+  chown $username:users .config/wallpaper/set
 
 fi
 
