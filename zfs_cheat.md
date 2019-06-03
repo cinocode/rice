@@ -58,9 +58,9 @@
  - # /etc/pacman.conf:
  - #------------------
  - [archzfs]
- - Server = http://archzfs.com/$repo/x86_64
- - pacman-key -r 0ee7a126
- - pacman-key --lsign-key 0ee7a126
+ - Server = https://archzfs.com/$repo/$arch
+ - pacman-key -r F75D9D76
+ - pacman-key --lsign-key F75D9D76
  - pacman -Syy
  - pacman -S zfs-linux
  - export ZRPOOL=zmypool
