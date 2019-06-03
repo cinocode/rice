@@ -59,7 +59,7 @@ then
   sudo -u "$username" yay -S networkmanager networkmanager-openconnect network-manager-applet-indicator
   sudo -u "$username" yay -S vlc arc-gtk-theme viewnior tumbler ffmpegthumbnailer
   sudo -u "$username" yay -S gvfs gvfs-smb xarchiver reflector
-  sudo -u "$username" yay -S git maven nodejs npm jdk8-openjdk
+  sudo -u "$username" yay -S git yadm maven nodejs npm jdk8-openjdk
   sudo -u "$username" yay -S iw dialog wpa_supplicant
   sudo -u "$username" yay -S grim slurp enpass-bin rxvt-unicode-pixbuf
   sudo -u "$username" yay -S google-chrome
@@ -91,14 +91,9 @@ fi
 
 if [ "$opt_dot" = "y" ]
 then
-  sudo -u "$username" git clone https://github.com/cinocode/dotfiles "$home_dir/.dotfiles"
-  chown -R $username:users "$home_dir/.dotfiles"
-  cd "$home_dir/.dotfiles/"
-  sudo -u "$username" git checkout sway
-  cd /
-  sudo -u "$username" sh "$home_dir/.dotfiles/init_configs.sh"
-  sudo -u "$username" sh "$home_dir/.dotfiles/init_wallpaper.sh"
-  sudo -u "$username" sh "$home_dir/.dotfiles/init_vim.sh"
+  cd "$home_dir"
+  sudo -u "$username" yadm clone https://github.com/cinocode/dotfiles
+  sudo -u "$username" sh "$home_dir/.config/dots/init_vim.sh"
 fi
 
 systemctl start NetworkManager
