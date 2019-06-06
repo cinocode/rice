@@ -62,6 +62,7 @@ then
   sudo -u "$username" yay -S git yadm maven wget nodejs npm jdk8-openjdk
   sudo -u "$username" yay -S iw dialog wpa_supplicant
   sudo -u "$username" yay -S grim slurp enpass-bin rxvt-unicode-pixbuf
+  sudo -u "$username" yay -S clipman
   sudo -u "$username" yay -S google-chrome
 
   chsh -s /bin/zsh "$username"
