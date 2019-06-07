@@ -58,7 +58,7 @@ then
   sudo -u "$username" yay -S pavucontrol pulseaudio pulseaudio-bluetooth pasystray pulseaudio-ctl
   sudo -u "$username" yay -S networkmanager networkmanager-openconnect network-manager-applet-indicator
   sudo -u "$username" yay -S mpv vlc arc-gtk-theme viewnior tumbler ffmpegthumbnailer
-  sudo -u "$username" yay -S gvfs gvfs-smb xarchiver reflector
+  sudo -u "$username" yay -S gvfs gvfs-smb xarchiver reflector redshift-wayland-git
   sudo -u "$username" yay -S git yadm maven wget nodejs npm jdk8-openjdk
   sudo -u "$username" yay -S iw dialog wpa_supplicant
   sudo -u "$username" yay -S grim slurp enpass-bin rxvt-unicode-pixbuf
