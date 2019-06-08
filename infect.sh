@@ -53,7 +53,7 @@ then
   sudo -u "$username" yay -S sway swaybg swayidle swaylock-blur-bin waybar xorg-server-xwayland 
   sudo -u "$username" yay -S ttf-inconsolata ttf-liberation ttf-dejavu otf-font-awesome system-san-francisco-font-git ttf-vlgothic
   sudo -u "$username" yay -S zsh tmux gvim keychain openssh xdg-user-dirs
-  sudo -u "$username" yay -S rofi w3m feh thunar ranger
+  sudo -u "$username" yay -S rofi w3m feh thunar ranger trash-cli
   sudo -u "$username" yay -S acpi sysstat alsa-utils ntfs-3g gotop
   sudo -u "$username" yay -S pavucontrol pulseaudio pulseaudio-bluetooth pasystray pulseaudio-ctl
   sudo -u "$username" yay -S networkmanager networkmanager-openconnect network-manager-applet-indicator
