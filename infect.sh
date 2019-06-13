@@ -53,7 +53,7 @@ then
   sudo -u "$username" yay -S sway swaybg swayidle swaylock-blur-bin waybar xorg-server-xwayland 
   sudo -u "$username" yay -S ttf-inconsolata ttf-liberation ttf-dejavu otf-font-awesome system-san-francisco-font-git ttf-vlgothic
   sudo -u "$username" yay -S zsh tmux gvim keychain openssh xdg-user-dirs
-  sudo -u "$username" yay -S rofi w3m feh thunar ranger trash-cli
+  sudo -u "$username" yay -S rofi w3m feh pacman-contrib thunar ranger trash-cli
   sudo -u "$username" yay -S acpi sysstat alsa-utils ntfs-3g gotop
   sudo -u "$username" yay -S pavucontrol pulseaudio pulseaudio-bluetooth pasystray pulseaudio-ctl
   sudo -u "$username" yay -S networkmanager networkmanager-openconnect network-manager-applet-indicator
@@ -61,9 +61,10 @@ then
   sudo -u "$username" yay -S gvfs gvfs-smb xarchiver reflector redshift-wayland-git
   sudo -u "$username" yay -S git yadm maven wget nodejs npm jdk8-openjdk
   sudo -u "$username" yay -S iw dialog wpa_supplicant
-  sudo -u "$username" yay -S grim slurp enpass-bin rxvt-unicode-pixbuf
+  sudo -u "$username" yay -S grim slurp rxvt-unicode-pixbuf
   sudo -u "$username" yay -S clipman
   sudo -u "$username" yay -S google-chrome
+  sudo -u "$username" yay -S pass tree browserpass-chrome diceware pass-extension-tail
 
   chsh -s /bin/zsh "$username"
 
