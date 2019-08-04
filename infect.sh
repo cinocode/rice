@@ -64,7 +64,7 @@ then
   sudo -u "$username" yay -S grim slurp rxvt-unicode-pixbuf
   sudo -u "$username" yay -S clipman
   sudo -u "$username" yay -S google-chrome
-  sudo -u "$username" yay -S pass tree browserpass-chrome diceware pass-extension-tail
+  sudo -u "$username" yay -S pass tree browserpass-chrome diceware pass-extension-tail pass-git-helper
 
   chsh -s /bin/zsh "$username"
 
