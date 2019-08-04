@@ -21,6 +21,7 @@ then
   passwd "$username"
 
   echo "%wheel      ALL=(ALL) ALL" >> /etc/sudoers
+  echo "%wheel      ALL=(root) NOPASSWD: /home/ole/.bin/mount_nas" >> /etc/sudoers
   echo "Defaults !tty_tickets" >> /etc/sudoers
   echo "Defaults env_reset, timestamp_timeout=30" >> /etc/sudoers
 
