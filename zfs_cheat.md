@@ -164,12 +164,20 @@ sudo rm /boot/initramfs-linux-three.img
 sudo mv /boot/initramfs-linux-two.img /boot/initramfs-linux-three.img
 sudo mv /boot/initramfs-linux-one.img /boot/initramfs-linux-two.img
 sudo cp /boot/initramfs-linux.img /boot/initramfs-linux-one.img
+# or
+# sudo cp ~/.config/kernel/default/initramfs-default.img /boot/initramfs-linux-one.img
+# sudo rm /boot/initramfs-linux-one.img
+# sudo cp /boot/initramfs-linux.img /boot/initramfs-linux-one.img
 
 echo cycle kernel
 sudo rm /boot/vmlinuz-linux-three
 sudo mv /boot/vmlinuz-linux-two /boot/vmlinuz-linux-three
 sudo mv /boot/vmlinuz-linux-one /boot/vmlinuz-linux-two
 sudo cp /boot/vmlinuz-linux /boot/vmlinuz-linux-one
+# or
+# sudo cp ~/.config/kernel/default/vmlinuz-default /boot/vmlinuz-default-one.img
+# sudo rm /boot/vmlinuz-linux-one
+# sudo cp /boot/vmlinuz-linux /boot/vmlinuz-linux-one
 
 echo cycle snaps and clones
 sudo zfs destroy -R ${ZROOT}/default@three
