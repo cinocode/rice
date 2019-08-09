@@ -137,47 +137,40 @@ cp /boot/initramfs-linux.img /boot/initramfs-linux-three.img
 
  - /boot/loader/entries/barch.conf
 title   Arch Linux (Latest Snapshot)
-linux   /vmlinuz-linux-one
+linux   /vmlinuz-default-one
 initrd  /intel-ucode.img
-initrd  /initramfs-linux-one.img
+initrd  /initramfs-default-one.img
 options zfs=zmypool/enc/root/one zfs_force=on rw
  - /boot/loader/entries/carch.conf
 title   Arch Linux (Prior Snapshot)
-linux   /vmlinuz-linux-two
+linux   /vmlinuz-default-two
 initrd  /intel-ucode.img
-initrd  /initramfs-linux-two.img
+initrd  /initramfs-default-two.img
 options zfs=zmypool/enc/root/two zfs_force=on rw
  - /boot/loader/entries/darch.conf
 title   Arch Linux (Oldest Snapshot)
-linux   /vmlinuz-linux-three
+linux   /vmlinuz-default-three
 initrd  /intel-ucode.img
-initrd  /initramfs-linux-three.img
+initrd  /initramfs-default-three.img
 options zfs=zmypool/enc/root/three zfs_force=on rw
 
  - /usr/local/bin/zyay
 #!/bin/bash
+DEF_KERNEL_POSTFIX=linux
 ZRPOOL=zmypool
 ZROOT=${ZRPOOL}/enc/root
 
 echo cycle initramfs
-sudo rm /boot/initramfs-linux-three.img
-sudo mv /boot/initramfs-linux-two.img /boot/initramfs-linux-three.img
-sudo mv /boot/initramfs-linux-one.img /boot/initramfs-linux-two.img
-sudo cp /boot/initramfs-linux.img /boot/initramfs-linux-one.img
-# or
-# sudo cp ~/.config/kernel/default/initramfs-default.img /boot/initramfs-linux-one.img
-# sudo rm /boot/initramfs-linux-one.img
-# sudo cp /boot/initramfs-linux.img /boot/initramfs-linux-one.img
+sudo rm /boot/initramfs-default-three.img
+sudo mv /boot/initramfs-default-two.img /boot/initramfs-default-three.img
+sudo mv /boot/initramfs-default-one.img /boot/initramfs-default-two.img
+sudo cp /boot/initramfs-${DEF_KERNEL_POSTFIX}.img /boot/initramfs-default-one.img
 
 echo cycle kernel
-sudo rm /boot/vmlinuz-linux-three
-sudo mv /boot/vmlinuz-linux-two /boot/vmlinuz-linux-three
-sudo mv /boot/vmlinuz-linux-one /boot/vmlinuz-linux-two
-sudo cp /boot/vmlinuz-linux /boot/vmlinuz-linux-one
-# or
-# sudo cp ~/.config/kernel/default/vmlinuz-default /boot/vmlinuz-default-one.img
-# sudo rm /boot/vmlinuz-linux-one
-# sudo cp /boot/vmlinuz-linux /boot/vmlinuz-linux-one
+sudo rm /boot/vmlinuz-default-three
+sudo mv /boot/vmlinuz-default-two /boot/vmlinuz-default-three
+sudo mv /boot/vmlinuz-default-one /boot/vmlinuz-default-two
+sudo cp /boot/vmlinuz-${DEF_KERNEL_POSTFIX} /boot/vmlinuz-default-one
 
 echo cycle snaps and clones
 sudo zfs destroy -R ${ZROOT}/default@three
