@@ -6,19 +6,10 @@
 
 2. Create the Pool
 
- - Check sector size: 
-   - parted /dev/sda
-   - (parted) print
-   - Model: ATA VBOX HARDDISK (scsi)
-   - Disk /dev/sda: 10.7GB
-   - Sector size (logical/physical): 512B/512B <--- here
-   - Partition Table: gpt
-   - Should you have a 4k disk then add -o ashift=12 to the zpool create command.
  - Check device id with blkid /dev/sda2
- - (modprobe zfs)
  - export ZRPOOL=zmypool
  - touch /etc/zfs/${ZRPOOL}.cache
- - zpool create -o cachefile=/etc/zfs/${ZRPOOL}.cache -o autotrim=on -O acltype=posixacl -m none -R /mnt ${ZRPOOL} /dev/disk/by-id/INSERT_DISKID
+ - zpool create -o cachefile=/etc/zfs/${ZRPOOL}.cache -o autotrim=on -o ashift=12 -O acltype=posixacl -m none -R /mnt ${ZRPOOL} /dev/disk/by-id/INSERT_DISKID
 
 3. Create the Datasets
 
