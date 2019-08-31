@@ -39,6 +39,7 @@
  - genfstab -U -p /mnt | grep boot >> /mnt/etc/fstab
  - echo /dev/zvol/${ZRPOOL}/enc/swap none swap discard 0 0 >> /mnt/etc/fstab
  - delete zfs entries from /mnt/etc/fstab
+ - zpool set cachefile=/etc/zfs/${ZRPOOL}.cache ${ZRPOOL} and copy over
  - arch-chroot
  - take care of locale / timezone / hostname / passwd
  - systemctl enable dhcpcd
@@ -55,7 +56,6 @@
  - pacman -Syy
  - pacman -S zfs-linux
  - export ZRPOOL=zmypool
- - zpool set cachefile=/etc/zfs/${ZRPOOL}.cache ${ZRPOOL}
  - check zpool cache for contents to be sure
 
 7. Setup Mkinitcpio
