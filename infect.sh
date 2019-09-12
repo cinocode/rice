@@ -17,7 +17,7 @@ if [ "$opt_user" = "y" ]
 then
   echo "Setting up $username - please provide your password"
   useradd -m "$username"
-  usermod -g users -aG wheel "$username"
+  usermod -g users -aG wheel,video "$username"
   passwd "$username"
 
   echo "%wheel      ALL=(ALL) ALL" >> /etc/sudoers
