@@ -35,7 +35,7 @@
 5. Install Arch
 
  - Optimize mirror list
- - pacstrap -i /mnt base base-devel git sudo vim
+ - pacstrap -i /mnt base base-devel linux-firmware dhcpcd git sudo vim
  - genfstab -U -p /mnt | grep boot >> /mnt/etc/fstab
  - echo /dev/zvol/${ZRPOOL}/enc/swap none swap discard 0 0 >> /mnt/etc/fstab
  - delete zfs entries from /mnt/etc/fstab
