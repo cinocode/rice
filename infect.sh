@@ -68,6 +68,7 @@ then
   sudo -u "$username" yay -S google-chrome
   sudo -u "$username" yay -S pass tree browserpass-chrome diceware pass-extension-tail pass-git-helper
 
+  sudo -u "$username" /rice/install_packages.sh
 
   chsh -s /bin/zsh "$username"
 
