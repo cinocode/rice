@@ -89,3 +89,4 @@ ensureInstalled iw
 ensureInstalled dialog
 ensureInstalled wpa_supplicant
 ensureInstalled google-chrome
+ensureInstalled docker
