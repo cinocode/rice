@@ -56,7 +56,7 @@ then
   sudo -u "$username" yay -S ttf-inconsolata ttf-liberation ttf-dejavu otf-font-awesome system-san-francisco-font-git ttf-vlgothic
   sudo -u "$username" yay -S zsh tmux gvim keychain openssh xdg-user-dirs rsync
   sudo -u "$username" yay -S rofi w3m feh pacman-contrib thunar ranger trash-cli
-  sudo -u "$username" yay -S acpi sysstat alsa-utils ntfs-3g gotop
+  sudo -u "$username" yay -S acpi sysstat alsa-utils ntfs-3g
   sudo -u "$username" yay -S pavucontrol pulseaudio pulseaudio-bluetooth pasystray pulseaudio-ctl
   sudo -u "$username" yay -S networkmanager networkmanager-openconnect network-manager-applet-indicator
   sudo -u "$username" yay -S mpv vlc arc-gtk-theme viewnior tumbler ffmpegthumbnailer

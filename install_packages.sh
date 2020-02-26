@@ -46,7 +46,7 @@ ensureInstalled acpi
 ensureInstalled sysstat
 ensureInstalled alsa-utils
 ensureInstalled ntfs-3g
-ensureInstalled gotop
+ensureInstalled ytop
 ensureInstalled i3
 ensureInstalled i3blocks
 ensureInstalled xorg-server
