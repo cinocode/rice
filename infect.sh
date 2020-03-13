@@ -102,7 +102,6 @@ then
   sudo -u "$username" sh "$home_dir/.config/dots/init_vim.sh"
   sudo -u "$username" sh "$home_dir/.config/dots/init_configs.sh"
   sudo -u "$username" sh "$home_dir/.bin/install_zsh"
-  sudo -u "$username" sh "$home_dir/.bin/install_fortis_util"
   sudo -u "$username" mv "$home_dir/go" "$home_dir/.config"
 fi
 
