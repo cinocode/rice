@@ -91,3 +91,4 @@ ensureInstalled wpa_supplicant
 ensureInstalled google-chrome
 ensureInstalled docker
 ensureInstalled squid
+ensureInstalled shellcheck
