@@ -92,3 +92,4 @@ ensureInstalled google-chrome
 ensureInstalled docker
 ensureInstalled squid
 ensureInstalled shellcheck
+ensureInstalled git-delta
