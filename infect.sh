@@ -24,11 +24,6 @@ then
   echo "%wheel      ALL=(root) NOPASSWD: /home/ole/.bin/mount_nas" >> /etc/sudoers
   echo "Defaults !tty_tickets" >> /etc/sudoers
   echo "Defaults env_reset, timestamp_timeout=30" >> /etc/sudoers
-
-  mkdir -p /etc/systemd/system/getty@tty1.service.d/
-  echo [Service] > /etc/systemd/system/getty@tty1.service.d/override.conf
-  echo ExecStart= >> /etc/systemd/system/getty@tty1.service.d/override.conf
-  echo ExecStart=-/usr/bin/agetty --autologin $username --noclear %I $TERM >> /etc/systemd/system/getty@tty1.service.d/override.conf
 fi
 
 if [ "$opt_yay" = "y" ]
@@ -53,6 +48,7 @@ then
 
   sudo -u "$username" yay -S i3 i3blocks xorg-server xorg-xinit compton autorandr arandr
   sudo -u "$username" yay -S sway swaybg swayidle swaylock-blur-bin waybar xorg-server-xwayland 
+  sudo -u "$username" yay -S sddm qt5-graphicaleffects qt5-quickcontrols gstreamer gst-liav gst-plugins-base gst-plugins-good
   sudo -u "$username" yay -S ttf-inconsolata ttf-liberation ttf-dejavu otf-font-awesome system-san-francisco-font-git ttf-vlgothic
   sudo -u "$username" yay -S zsh tmux gvim keychain openssh xdg-user-dirs rsync
   sudo -u "$username" yay -S rofi w3m feh pacman-contrib thunar ranger trash-cli
@@ -93,6 +89,8 @@ then
   sh "$home_dir/.dvorak_ger_io/install_xkb.sh"
   cd /
 
+  # setup xkb dvorak ger io symbols
+  # localectl set-x11-keymap dvorak_ger_io
 fi
 
 if [ "$opt_dot" = "y" ]
@@ -108,6 +106,16 @@ fi
 systemctl start NetworkManager
 systemctl enable NetworkManager
 systemctl enable systemd-timesyncd
+
+cp /rice/sddm/sddm.conf /etc/sddm.conf
+systemctl enable sddm
+git clone https://github.com/stuomas/delicious-sddm-theme.git
+cd delicious-sddm-theme
+./install.sh
+cd ..
+rm -rf delicious-sddm-theme
+cat /rice/sddm/theme.conf > /usr/share/sddm/themes/delicious/theme.conf
+cp /rice/sddm/sway.svg /usr/share/sddm/themes/delicious/icons/delicate/sway.svg
 
 mv /rice "$home_dir/.rice"
 chown -R $username:users "$home_dir/.rice"
