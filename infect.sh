@@ -80,15 +80,14 @@ then
   sudo -u "$username" xdg-user-dirs-update
   cd /
 
-  sudo -u "$username" git clone https://github.com/cinocode/dvorak_ger_io "$home_dir/.dvorak_ger_io"
-  chown -R $username:users "$home_dir/.dvorak_ger_io"
-  cd "$home_dir/.dvorak_ger_io"
+  sudo -u "$username" mkdir -p "${home_dir}/code"
+  sudo -u "$username" git clone https://github.com/cinocode/dvorak_ger_io "${home_dir}/code/dvorak_ger_io"
+  chown -R $username:users "${home_dir}/code/dvorak_ger_io"
+  cd "${home_dir}/code/dvorak_ger_io"
   sudo -u "$username" git checkout gk64
-  sh "$home_dir/.dvorak_ger_io/install_xkb.sh"
+  sh "${home_dir}/code/dvorak_ger_io/install_xkb.sh"
   cd /
-
-  # setup xkb dvorak ger io symbols
-  # localectl set-x11-keymap dvorak_ger_io
+  sudo -u "$username" localectl set-x11-keymap dvorak_ger_io
 fi
 
 if [ "$opt_dot" = "y" ]
@@ -116,9 +115,9 @@ cat /rice/sddm/theme.conf > /usr/share/sddm/themes/delicious/theme.conf
 cp /rice/sddm/sway.svg /usr/share/sddm/themes/delicious/icons/delicate/sway.svg
 echo 'NoDisplay=true' >> /usr/share/xsessions/i3-with-shmlog.desktop
 
-sudo -u "$username" mkdir "/home/${username}/code"
-mv /rice "/home/${username}/code"
-chown -R $username:users "/home/${username}/code/rice"
+sudo -u "$username" mkdir -p "${home_dir}/code"
+mv /rice "${home_dir}/code"
+chown -R $username:users "${home_dir}/code/rice"
 
 echo This is a good time to take care of graphic card drivers or microcode
 echo With systemd boot you might want to run: 'yay -S systemd-boot-pacman-hook'
