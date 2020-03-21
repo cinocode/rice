@@ -116,6 +116,7 @@ cd ..
 rm -rf delicious-sddm-theme
 cat /rice/sddm/theme.conf > /usr/share/sddm/themes/delicious/theme.conf
 cp /rice/sddm/sway.svg /usr/share/sddm/themes/delicious/icons/delicate/sway.svg
+echo 'NoDisplay=true' >> /usr/share/xsessions/i3-with-shmlog.desktop
 
 mv /rice "$home_dir/.rice"
 chown -R $username:users "$home_dir/.rice"
