@@ -64,8 +64,6 @@ then
   sudo -u "$username" yay -S google-chrome
   sudo -u "$username" yay -S pass tree browserpass-chrome diceware pass-extension-tail pass-git-helper
 
-  sudo -u "$username" /rice/install_packages.sh
-
   chsh -s /bin/zsh "$username"
 
   echo "#!/bin/bash" > /usr/local/bin/google-chrome-stable-incognito
@@ -118,8 +116,9 @@ cat /rice/sddm/theme.conf > /usr/share/sddm/themes/delicious/theme.conf
 cp /rice/sddm/sway.svg /usr/share/sddm/themes/delicious/icons/delicate/sway.svg
 echo 'NoDisplay=true' >> /usr/share/xsessions/i3-with-shmlog.desktop
 
-mv /rice "$home_dir/.rice"
-chown -R $username:users "$home_dir/.rice"
+sudo -u "$username" mkdir "/home/${username}/code"
+mv /rice "/home/${username}/code"
+chown -R $username:users "/home/${username}/code/rice"
 
 echo This is a good time to take care of graphic card drivers or microcode
 echo With systemd boot you might want to run: 'yay -S systemd-boot-pacman-hook'
