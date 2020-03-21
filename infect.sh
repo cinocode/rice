@@ -114,6 +114,9 @@ rm -rf delicious-sddm-theme
 cat /rice/sddm/theme.conf > /usr/share/sddm/themes/delicious/theme.conf
 cp /rice/sddm/sway.svg /usr/share/sddm/themes/delicious/icons/delicate/sway.svg
 echo 'NoDisplay=true' >> /usr/share/xsessions/i3-with-shmlog.desktop
+echo "if xrandr --query | grep -q 'HDMI-1 connected'; then" >> /usr/share/sddm/scripts/Xsetup
+echo "    xrandr --output HDMI-1 --primary" >> /usr/share/sddm/scripts/Xsetup
+echo "fi" >> /usr/share/sddm/scripts/Xsetup
 
 sudo -u "$username" mkdir -p "${home_dir}/code"
 mv /rice "${home_dir}/code"
