@@ -48,7 +48,7 @@ then
 
   sudo -u "$username" yay -S i3 i3blocks xorg-server xorg-xinit compton autorandr arandr
   sudo -u "$username" yay -S sway swaybg swayidle swaylock-blur-bin waybar xorg-server-xwayland 
-  sudo -u "$username" yay -S sddm qt5-graphicaleffects qt5-quickcontrols gstreamer gst-liav gst-plugins-base gst-plugins-good
+  sudo -u "$username" yay -S sddm qt5-graphicaleffects qt5-quickcontrols gstreamer gst-libav gst-plugins-base gst-plugins-good
   sudo -u "$username" yay -S ttf-inconsolata ttf-liberation ttf-dejavu otf-font-awesome system-san-francisco-font-git ttf-vlgothic ttf-fira-code
   sudo -u "$username" yay -S zsh tmux gvim keychain openssh xdg-user-dirs rsync
   sudo -u "$username" yay -S rofi w3m feh pacman-contrib thunar ranger trash-cli
