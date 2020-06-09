@@ -46,7 +46,7 @@ then
 
   pacman -Syyu
 
-  sudo -u "$username" yay -S i3 i3blocks xorg-server xorg-xinit compton autorandr arandr
+  sudo -u "$username" yay -S i3 i3blocks xorg-server xorg-xinit compton autorandr arandr scrot
   sudo -u "$username" yay -S sway swaybg swayidle swaylock-blur-bin waybar xorg-server-xwayland 
   sudo -u "$username" yay -S sddm qt5-graphicaleffects qt5-quickcontrols qt5-multimedia gstreamer gst-libav gst-plugins-base gst-plugins-good
   sudo -u "$username" yay -S ttf-inconsolata ttf-liberation ttf-dejavu otf-font-awesome system-san-francisco-font-git ttf-vlgothic ttf-fira-code
